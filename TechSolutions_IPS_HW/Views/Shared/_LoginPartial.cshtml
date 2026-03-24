@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<TechSolutions_IPS_HW.Models.User.ApplicationUser> SignInManager
+@inject UserManager<TechSolutions_IPS_HW.Models.User.ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var displayName = !string.IsNullOrWhiteSpace(currentUser?.DisplayName)
+        ? currentUser.DisplayName
+        : User.Identity?.Name;
+
+    @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-light position-relative" href="#" id="notificationBell" data-bs-toggle="modal" data-bs-target="#notificationsModal" title="Notifications">
+                <i class="fa-solid fa-bell"></i>
+                <span id="notificationBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                    0
+                </span>
+            </a>
+        </li>
+    }
+    <li class="nav-item">
+        <a  class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @displayName!</a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-light">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>
+
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrator") || User.IsInRole("Management")))
+{
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Pending User Approvals</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="notificationsLoading" class="text-center py-3">
+                    <div class="spinner-border spinner-border-sm" role="status"></div> Loading...
+                </div>
+                <div id="notificationsEmpty" class="text-center py-3 d-none">
+                    <p class="text-muted">No pending notifications.</p>
+                </div>
+                <table id="notificationsTable" class="table table-striped d-none">
+                    <thead>
+                        <tr>
+                            <th>User Email</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="notificationsBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+}

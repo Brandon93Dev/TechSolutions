@@ -1,0 +1,167 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<TechSolutions_IPS_HW.Models.User.ApplicationUser> SignInManager
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
+    var currentPath = Context.Request.Path.Value ?? string.Empty;
+
+    string NavClass(string controller, string action = "Index")
+        => string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase)
+           && string.Equals(currentAction, action, StringComparison.OrdinalIgnoreCase)
+            ? "nav-link active"
+            : "nav-link";
+
+    string PathNavClass(string pathPrefix)
+        => currentPath.StartsWith(pathPrefix, StringComparison.OrdinalIgnoreCase)
+            ? "nav-link active"
+            : "nav-link";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechSolutions</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--Added a fontawesme library to load in some more modern more professional looking icons-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TechSolutions_IPS_HW.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+    
+    <script> 
+        document.addEventListener(
+        'DOMContentLoaded', 
+        function () 
+        { 
+            //All be it a dirty workaround, the external Login/Regitstarrtion provider is loaded 
+            // from a preloaded library, im using jQuery to remove the element.
+            if (window.jQuery) 
+            { 
+                var registerForm = $("#registerForm").parent().removeClass("col-lg-6").addClass("col-lg-12");
+                var loginForm = $("#account").parent().parent().removeClass("col-lg-6").addClass("col-lg-12");
+                var externalRegProviderElement = $("section h3:contains('Use another service to register.')").parent().hide();                        
+                var externalLoginProviderElement = $("section h3:contains('Use another service to log in.')").parent().hide();
+            }            
+        }); 
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark site-navbar mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fa-solid fa-shield-halved me-1"></i>TechSolutions
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">                    
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                           
+
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+                            {
+                                <li class="nav-item">
+                                    <a class="@NavClass("AdminDashboard")" asp-area="" asp-controller="AdminDashboard" asp-action="Index">
+                                        <i class="fa-solid fa-gauge-high me-1"></i>Dashboard
+                                    </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a class="@NavClass("EmployeeDashboard")" asp-area="" asp-controller="EmployeeDashboard" asp-action="Index">
+                                        <i class="fa-solid fa-gauge-high me-1"></i>Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="@NavClass("EmployeeEmailTemplate")" asp-area="" asp-controller="EmployeeEmailTemplate" asp-action="Index">
+                                        <i class="fa-regular fa-envelope me-1"></i>My Templates
+                                    </a>
+                                </li>
+                            }
+                        } 
+                        
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+                        {
+                            <li class="nav-item">
+                                <a class="@NavClass("AdminEmployees")" asp-area="" asp-controller="AdminEmployees" asp-action="Index">
+                                    <i class="fa-solid fa-user-check me-1"></i>Employees
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Management") || User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+                                <a class="@NavClass("Customer")" asp-area="" asp-controller="Customer" asp-action="Index">
+                                    <i class="fa-solid fa-users me-1"></i>Customers
+                                </a>
+                            </li>
+                        }
+                         
+                        <li class="nav-item">
+                            <a class="@NavClass("Home", "Privacy")" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @if (TempData["StatusMessage"] != null)
+    {
+        <!-- Status message modal (auto-shown) -->
+        <div class="modal fade" id="statusMessageModal" tabindex="-1" aria-labelledby="statusMessageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="statusMessageModalLabel">Action Completed</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@TempData["StatusMessage"]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <footer class="border-top footer text-muted">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>&copy; 2026 - TechSolutions_IPS_HW - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
+            <i class="fa-solid fa-shield-halved me-1"></i>POPIA Compliant
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/common.js" asp-append-version="true"></script>
+    <script src="~/js/shared/notifications.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @if (TempData.Peek("StatusMessage") != null)
+    {
+        <script>
+            $(function () {
+                var modal = new bootstrap.Modal(document.getElementById('statusMessageModal'));
+                modal.show();
+            });
+        </script>
+    }
+</body>
+</html>

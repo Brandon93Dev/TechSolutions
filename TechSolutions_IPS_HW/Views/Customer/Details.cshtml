@@ -1,0 +1,218 @@
+@model TechSolutions_IPS_HW.Models.Customer.Customer
+@using TechSolutions_IPS_HW.Models.Enums
+@{
+    ViewData["Title"] = "Customer Details";
+    var canManageCustomers = User.IsInRole("Employee");
+    var canEmailCustomer = User.IsInRole("Employee") || User.IsInRole("Management");
+
+    var addressParts = new[]
+    {
+        Model.AddressLine1,
+        Model.AddressLine2,
+        Model.City,
+        Model.ProvinceState,
+        Model.AddressCountry,
+        Model.AreaCode
+    }
+    .Where(p => !string.IsNullOrWhiteSpace(p))
+    .ToList();
+
+    var displayAddress = addressParts.Any()
+        ? string.Join(", ", addressParts)
+        : "—";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h2 class="mb-1 d-flex align-items-center gap-2">
+            <span class="customer-page-icon bg-primary-subtle text-primary">
+                <i class="fa-solid fa-address-card"></i>
+            </span>
+            <span>Customer Details</span>
+        </h2>
+        <p class="text-muted mb-0 customer-page-subtitle">Review profile, contact, and address information.</p>
+    </div>
+    <div>
+        @if (Model.Status == CustomerStatus.Draft)
+        {
+            <span class="badge bg-warning text-dark fs-6">
+                <i class="fa-solid fa-pen-to-square me-1"></i>Draft
+            </span>
+        }
+        else
+        {
+            <span class="badge bg-success fs-6">
+                <i class="fa-solid fa-circle-check me-1"></i>Active
+            </span>
+        }
+    </div>
+</div>
+
+<div class="row justify-content-center customer-detail-shell">
+    <div class="col-lg-12 col-xl-10">
+        <div class="card border-0 shadow-sm rounded-4 mb-4 customer-detail-card">
+            <div class="card-header customer-detail-header d-flex justify-content-between align-items-center py-3 px-4">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="customer-page-icon bg-primary-subtle text-primary">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <span class="fw-semibold">@Model.FullName</span>
+                </div>
+                <small class="text-muted">Customer Profile</small>
+            </div>
+            <div class="card-body px-4 py-4">
+                <div class="customer-detail-section mb-4">
+                    <h6 class="text-muted text-uppercase small fw-semibold mb-3">Personal Information</h6>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">First Name</dt>
+                        <dd class="col-sm-8">@Model.FirstName</dd>
+
+                        <dt class="col-sm-4">Surname</dt>
+                        <dd class="col-sm-8">@Model.Surname</dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8"><a href="mailto:@Model.Email">@Model.Email</a></dd>
+
+                        <dt class="col-sm-4">Nationality</dt>
+                        <dd class="col-sm-8">@(Model.Nationality ?? "—")</dd>
+
+                        <dt class="col-sm-4">Phone</dt>
+                        <dd class="col-sm-8">@(Model.Phone ?? "—")</dd>
+
+                        <dt class="col-sm-4">Date of Birth</dt>
+                        <dd class="col-sm-8">@(Model.DateOfBirth?.ToString("dd MMM yyyy") ?? "—")</dd>
+
+                        <dt class="col-sm-4">ID / Passport Number</dt>
+                        <dd class="col-sm-8">@(Model.IdNumber ?? "—")</dd>
+
+                        <dt class="col-sm-4">Gender</dt>
+                        <dd class="col-sm-8">@(Model.Gender ?? "—")</dd>
+
+                        <dt class="col-sm-4">Address</dt>
+                        <dd class="col-sm-8">@displayAddress</dd>
+                    </dl>
+                </div>
+
+                <div class="customer-detail-section mb-4">
+                    <h6 class="text-muted text-uppercase small fw-semibold mb-3">Additional Information</h6>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Data Source</dt>
+                        <dd class="col-sm-8">@(Model.DataSource ?? "—")</dd>
+
+                        <dt class="col-sm-4">Notes</dt>
+                        <dd class="col-sm-8">@(Model.Notes ?? "—")</dd>
+                    </dl>
+                </div>
+
+                <div class="customer-detail-section mb-0">
+                    <h6 class="text-muted text-uppercase small fw-semibold mb-3">Record History</h6>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Created</dt>
+                        <dd class="col-sm-8">@Model.CreatedAt.ToLocalDisplay()</dd>
+
+                        <dt class="col-sm-4">Last Updated</dt>
+                        <dd class="col-sm-8">@Model.UpdatedAt.ToLocalDisplay()</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            @if (canEmailCustomer)
+            {
+                <button type="button" class="btn btn-outline-primary rounded-pill px-4" id="btnEmailCustomer"
+                        data-id="@Model.CustomerId" data-name="@Model.FullName" data-email="@Model.Email">
+                    <i class="fa-regular fa-envelope me-1"></i>Email Customer
+                </button>
+            }
+
+            @if (canManageCustomers)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.CustomerId" class="btn btn-primary rounded-pill px-4">
+                    <i class="fa-solid fa-pen me-1"></i>Edit
+                </a>
+                <button type="button" class="btn btn-danger rounded-pill px-4" id="btnDelete"
+                        data-id="@Model.CustomerId" data-name="@Model.FullName">
+                    <i class="fa-solid fa-trash me-1"></i>Delete
+                </button>
+            }
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 ms-auto">
+                <i class="fa-solid fa-arrow-left me-1"></i>Back to List
+            </a>
+        </div>
+    </div>
+</div>
+
+@if (canEmailCustomer)
+{
+    <div class="modal fade" id="emailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fa-regular fa-envelope me-1"></i>Email Customer</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 small text-muted" id="emailTargetLine"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Template</label>
+                        <select class="form-select" id="emailTemplate"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="emailSubject" maxlength="200" />
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label class="form-label">Email HTML (Editable)</label>
+                            <textarea class="form-control customer-email-body-input" id="emailBodyHtml" rows="14" maxlength="20000"></textarea>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="form-label">Preview</label>
+                            <iframe class="customer-email-preview border rounded bg-light w-100" id="emailPreview" sandbox="" referrerpolicy="no-referrer"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnSendCustomerEmail">
+                        <i class="fa-solid fa-paper-plane me-1"></i>Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (canManageCustomers)
+{
+    <!-- Delete confirmation bootstrrap modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fa-solid fa-triangle-exclamation me-1"></i>Confirm Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="deleteCustomerName"></strong>?</p>
+                    <p class="text-muted mb-0">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmDelete">
+                        <i class="fa-solid fa-trash me-1"></i>Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/customer.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/customer/details.js" asp-append-version="true"></script>
+}

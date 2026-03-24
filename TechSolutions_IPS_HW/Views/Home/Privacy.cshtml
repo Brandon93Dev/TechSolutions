@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4 p-md-5">
+        <h1 class="mb-3">@ViewData["Title"]</h1>
+        <p class="text-muted mb-4">Last updated: @DateTime.UtcNow.ToString("dd MMM yyyy")</p>
+
+        <p>
+            This page provides a general overview of how this application handles personal information.
+            It is intended for demonstration purposes and should be reviewed and tailored for production use.
+        </p>
+
+        <h5 class="mt-4">1. Information We Collect</h5>
+        <p>
+            We may collect account information (such as email address and display name), customer profile details entered by authorised users,
+            and operational metadata required for security, auditing, and system reliability.
+        </p>
+
+        <h5 class="mt-4">2. How Information Is Used</h5>
+        <p>
+            Information is used to authenticate users, manage access control, process business workflows, support customer record management,
+            and maintain audit trails for security and accountability.
+        </p>
+
+        <h5 class="mt-4">3. Access and Security</h5>
+        <p>
+            Access to protected features is role-based. Security controls such as authentication, lockout protection,
+            and audit logging are used to reduce unauthorised access and monitor sensitive actions.
+        </p>
+
+        <h5 class="mt-4">4. Data Retention</h5>
+        <p>
+            Data is retained as needed for operational, reporting, and compliance-related purposes.
+            Retention periods should be defined according to your organisation's policy and legal obligations.
+        </p>
+
+        <h5 class="mt-4">5. Third-Party Services</h5>
+        <p>
+            The system may use external infrastructure services such as SMTP providers for email delivery.
+            Any third-party processing should be reviewed under your organisation's security and privacy standards.
+        </p>
+
+        <h5 class="mt-4">6. Contact</h5>
+        <p class="mb-0">
+            For questions about data handling in this environment, contact your system administrator or compliance representative.
+        </p>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@page
+@model TechSolutions_IPS_HW.Areas.Identity.Pages.Account.Manage.IndexModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<!--Generated this VIA ai to overwrite the build in Microsoft identity pages-->
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+        <i class="fa-solid fa-circle-check me-1"></i>@Model.StatusMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h5 class="mb-3">Profile Information</h5>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label class="form-label text-muted">Email</label>
+        <input type="text" class="form-control" value="@Model.Email" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Input.DisplayName" class="form-label"></label>
+        <input asp-for="Input.DisplayName" class="form-control" />
+        <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary rounded-pill px-4">
+        <i class="fa-solid fa-floppy-disk me-1"></i>Save Changes
+    </button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
