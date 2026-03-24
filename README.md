@@ -5,20 +5,32 @@
 
 
 ---
-## A. Prerequisites (obviously after cloning this repo)
-###     A.1 Visual Studio Community Insiders 2026
-####        A.1.1 Install and add **ASP.NET and Web Development** workload.
-####        A.1.1
+## A. Prerequisites (After Cloning the Repository)
 
-###     A.2 SQLExpress (I Used MSSQL17)
-####        A.2.1 Go through installation process.
-####        A.2.2 When you reach the authentication step its recommended to use mixed mode and remember the password that you set in installation as this is the easiest way to authenticate.
+### A.1 Visual Studio Community 2026 (Insiders)
+1. Install **Visual Studio Community 2026 Insiders**.
+2. During installation (or via Modify), add the **ASP.NET and web development** workload.
 
-###     A.3 SQL Server Management Studio (im using SMSS 22)
-####        A.3.1 Install and connect with SqlExpress instance
+### A.2 SQL Server Express (MSSQL 17 recommended)
+1. Download and run the SQL Server Express installer.
+2. When you reach the **Authentication Mode** step, choose **Mixed Mode** (SQL Server and Windows Authentication).
+3. Set and remember a strong `sa` password — you'll need it to connect later.
 
-###    A.4 SMPT mail server credentials (OR you can use a local SMTP server like Papercut or MailHog just for Development and not Production)
+### A.3 SQL Server Management Studio (SSMS 22 recommended)
+1. Install **SQL Server Management Studio**.
+2. Open SSMS and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
+
+### A.4 SMTP Mail Server Credentials
+For **development**, you can use a local SMTP testing tool such as:
+- **Papercut**
+- **MailHog**
+- **MailDev**
+
+For **production**, use proper SMTP credentials (SendGrid, Microsoft 365, Gmail with App Password, etc.).
+
 ---
+
+**Tip:** Keep your `sa` password and SMTP settings handy — you'll need them when configuring `appsettings.json`.
 
 ## 1. Project Overview
 
