@@ -3,6 +3,14 @@
 > This document captures the main design and build choices made during development.
 > It's a living reference for the project and for assessment purposes.
 
+
+---
+## Prerequisites 
+### **Visual Studio Community Insiders 2026**
+### **SQL Server Management Studio (im using SMSS 22)**
+### **SQLExpress (I Used MSSQL17)**
+#### Ensure you install SqlExpress in mixed mode and retain the password as this is the easiest way to setup and run everything
+
 ---
 
 ## 1. Project Overview
