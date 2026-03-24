@@ -6,22 +6,21 @@
 
 ---
 ## A. Prerequisites (After Cloning the Repository)
-
-### A.1 Visual Studio Community 2026 (Insiders)
-1. Install **Visual Studio Community 2026 Insiders**.
-2. During installation (or via Modify), add the **ASP.NET and web development** workload.
-3. After installation open up the root of the cloned project  and navigate into `~\TechSolutions_IPS_HW`
-4. 
-
-### A.2 SQL Server Express (MSSQL 17 recommended)
+### A.1 SQL Server Express (MSSQL 17 recommended)
 1. Download and run the SQL Server Express installer.
 2. When you reach the **Authentication Mode** step, choose **Mixed Mode** (SQL Server and Windows Authentication).
 3. Set and remember a strong `sa` password — you'll need it to connect later.
 
-### A.3 SQL Server Management Studio (SSMS 22 recommended)
+### A.2 SQL Server Management Studio (SSMS 22 recommended)
 1. Install **SQL Server Management Studio**.
 2. Open SSMS and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
-3. 
+
+### A.3 Visual Studio Community 2026 (Insiders)
+1. Install **Visual Studio Community 2026 Insiders**.
+2. During installation (or via Modify), add the **ASP.NET and web development** workload.
+3. After installation open up the root of the cloned project  and navigate into `~\TechSolutions_IPS_HW`
+4. Double-Click on TechSolutions_IPS_HW.sln and if prompted to select a program to open it, use visual studio.
+5. Press Ctrl+Shift+B or right click the solution and click Build (if the tech gremlins are asleep the project should build with no issues)
 
 ### A.4 SMTP Mail Server Credentials
 For **development**, you can use a local SMTP testing tool such as:
