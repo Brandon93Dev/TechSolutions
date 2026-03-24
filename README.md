@@ -39,7 +39,8 @@
    - Change `Password=YourStrongPasswordHere` to the **sa password** you created earlier.
    - The final connection string should look similar to this:
    ```json
-   "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=tecsln_main;Persist Security Info=True;User ID=sa;Password=TecAdmin132#;Trust Server Certificate=True"
+   "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=tecsln_main;Persist Security Info=True;User ID=sa;Password=YourStrongPasswordHere;Trust Server Certificate=True"
+   
 **How to update it:
 Replace YourStrongPasswordHere with the sa password you set during SQL Server Express installation.
 Do not change any other part of the string unless you used a different instance name.**
