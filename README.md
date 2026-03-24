@@ -5,12 +5,19 @@
 
 
 ---
-## Prerequisites 
-### **Visual Studio Community Insiders 2026**
-### **SQL Server Management Studio (im using SMSS 22)**
-### **SQLExpress (I Used MSSQL17)**
-#### Ensure you install SqlExpress in mixed mode and retain the password as this is the easiest way to setup and run everything
+## A. Prerequisites (obviously after cloning this repo)
+###     A.1 Visual Studio Community Insiders 2026
+####        A.1.1 Install and add **ASP.NET and Web Development** workload.
+####        A.1.1
 
+###     A.2 SQLExpress (I Used MSSQL17)
+####        A.2.1 Go through installation process.
+####        A.2.2 When you reach the authentication step its recommended to use mixed mode and remember the password that you set in installation as this is the easiest way to authenticate.
+
+###     A.3 SQL Server Management Studio (im using SMSS 22)
+####        A.3.1 Install and connect with SqlExpress instance
+
+###    A.4 SMPT mail server credentials (OR you can use a local SMTP server like Papercut or MailHog just for Development and not Production)
 ---
 
 ## 1. Project Overview
