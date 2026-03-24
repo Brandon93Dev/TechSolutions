@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-TechSolutions_IPS_HW-e4c34641-ce67-443f-b30b-d68711a3b9ba</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".github\**" />
+    <Compile Remove="Views\Authentication\**" />
+    <Content Remove=".github\**" />
+    <Content Remove="Views\Authentication\**" />
+    <EmbeddedResource Remove=".github\**" />
+    <EmbeddedResource Remove="Views\Authentication\**" />
+    <None Remove=".github\**" />
+    <None Remove="Views\Authentication\**" />
+
+    <Compile Remove="TechSolutions_IPS_HW.Tests\**" />
+    <Content Remove="TechSolutions_IPS_HW.Tests\**" />
+    <EmbeddedResource Remove="TechSolutions_IPS_HW.Tests\**" />
+    <None Remove="TechSolutions_IPS_HW.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Documention\" />
+    <Folder Include="Pages\Admin\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="EmailTemplates\**\*.html" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

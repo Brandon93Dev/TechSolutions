@@ -1,0 +1,216 @@
+@{
+    ViewData["Title"] = "Customers";
+    var canManageCustomers = User.IsInRole("Employee");
+}
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Customers</h2>
+        <p class="text-muted mb-0">Manage your customer database and track their status.</p>
+    </div>
+    @if (canManageCustomers)
+    {
+        <a asp-action="Edit" asp-route-id="@Guid.Empty" class="btn btn-primary rounded-pill px-4" id="btnNewCustomer">
+            <i class="fa-solid fa-plus me-1"></i>Add Customer
+        </a>
+    }
+</div>
+
+<div id="customerPermissions"
+     data-can-manage="@canManageCustomers.ToString().ToLowerInvariant()"
+     data-is-privileged="@((User.IsInRole("Administrator") || User.IsInRole("Management")).ToString().ToLowerInvariant())"
+     class="d-none"></div>
+
+@if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+{
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Created By</label>
+                    <select class="form-select" id="filterCreatedBy">
+                        <option value="">Select employee...</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Country</label>
+                    <select class="form-select" id="filterCountry">
+                        <option value="">Select country...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small text-muted">Created From</label>
+                    <input type="date" class="form-control" id="filterCreatedFrom" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small text-muted">Created To</label>
+                    <input type="date" class="form-control" id="filterCreatedTo" />
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="button" class="btn btn-outline-secondary" id="btnClearAdvancedFilters">
+                        <i class="fa-solid fa-rotate-left me-1"></i>Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Metric cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 customer-metric-card active" data-status="">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="customer-metric-icon bg-primary-subtle text-primary">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Total Customers</div>
+                    <div class="fs-3 fw-bold" id="metricTotal">&mdash;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 customer-metric-card" data-status="Active">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="customer-metric-icon bg-success-subtle text-success">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Active Accounts</div>
+                    <div class="fs-3 fw-bold" id="metricActive">&mdash;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 customer-metric-card" data-status="Draft">
+            <div class="card-body d-flex align-items-center gap-3 py-3">
+                <div class="customer-metric-icon bg-warning-subtle text-warning">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Drafts</div>
+                    <div class="fs-3 fw-bold" id="metricDraft">&mdash;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search bar -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body py-2">
+        <div class="input-group input-group-lg border-0">
+            <span class="input-group-text bg-transparent border-0 text-muted">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input type="text" class="form-control border-0 shadow-none" id="customerSearch"
+                   placeholder="Search customers by name, email or phone..." />
+        </div>
+    </div>
+</div>
+
+<!-- Customer table -->
+<div class="card border-0 shadow-sm rounded-4">
+    <div id="customerTableContainer" class="p-3">
+        <table class="table customer-table mb-0" id="customerTable">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Added</th>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+                    {
+                        <th>Created By</th>
+                    }
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Delete confirmation modal popup (bootstrap Modal)-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="fa-solid fa-triangle-exclamation me-1"></i>Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteCustomerName"></strong>?</p>
+                <p class="text-muted mb-0">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmDelete">
+                    <i class="fa-solid fa-trash me-1"></i>Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Email modal -->
+<div class="modal fade" id="emailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="fa-regular fa-envelope me-1"></i>Email Customer</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 small text-muted" id="emailTargetLine"></div>
+                <div class="mb-3">
+                    <label class="form-label">Template</label>
+                    <select class="form-select" id="emailTemplate"></select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="emailSubject" maxlength="200" />
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Email HTML (Editable)</label>
+                        <textarea class="form-control customer-email-body-input" id="emailBodyHtml" rows="14" maxlength="20000"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Preview</label>
+                        <iframe class="customer-email-preview border rounded bg-light w-100" id="emailPreview" sandbox="" referrerpolicy="no-referrer"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSendCustomerEmail">
+                    <i class="fa-solid fa-paper-plane me-1"></i>Send
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/customer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" />
+    @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+    {
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    }
+}
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    @if (User.IsInRole("Administrator") || User.IsInRole("Management"))
+    {
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    }
+    <script src="~/js/customer/index.js" asp-append-version="true"></script>
+}

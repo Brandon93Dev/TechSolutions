@@ -1,0 +1,54 @@
+@page
+@model TechSolutions_IPS_HW.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Secure Login";
+    Layout = "/Views/Shared/_LoginLayout.cshtml";
+}
+<!--OVerride on Microsoft's built in identity pages to override styles and layout-->
+<div class="card login-card">
+    <div class="login-header">
+        <i class="bi bi-shield-lock-fill d-block"></i>
+        <h4 class="mb-0 fw-bold">TechSolutions</h4>
+        <small class="opacity-75">Secure Portal Login</small>
+    </div>
+    <div class="card-body p-4">
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                <label asp-for="Input.Email"><i class="bi bi-envelope me-1"></i>Email address</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Password" />
+                <label asp-for="Input.Password"><i class="bi bi-key me-1"></i>Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="Input.RememberMe" class="form-check-input" />
+                <label asp-for="Input.RememberMe" class="form-check-label">Remember me</label>
+            </div>
+
+            <button id="login-submit" type="submit" class="btn btn-primary btn-login w-100 mb-3">
+                <i class="bi bi-box-arrow-in-right me-1"></i>Sign In
+            </button>
+
+            <div class="text-center">
+                <a id="forgot-password" asp-page="./ForgotPassword" class="small text-decoration-none">Forgot your password?</a>
+                <span class="text-muted mx-1">&middot;</span>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="small text-decoration-none">Register as a new user</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer bg-light text-center py-3" style="border-radius: 0 0 1rem 1rem;">
+        <small class="text-muted"><i class="bi bi-lock-fill me-1"></i>Encrypted with RSA &middot; Secure Connection</small>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

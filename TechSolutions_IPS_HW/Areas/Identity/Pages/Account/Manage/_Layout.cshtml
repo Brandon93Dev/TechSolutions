@@ -1,0 +1,35 @@
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/account-manage.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+}
+
+<div class="account-manage-shell">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <span class="customer-page-icon bg-primary-subtle text-primary"><i class="fa-solid fa-user-gear"></i></span>
+        <div>
+            <h2 class="mb-0">Account Settings</h2>
+            <small class="text-muted">Manage your profile and security preferences.</small>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-lg-3">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

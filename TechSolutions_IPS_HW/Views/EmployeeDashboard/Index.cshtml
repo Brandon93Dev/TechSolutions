@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Employee Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h2 class="mb-1"><i class="fa-solid fa-gauge-high me-2"></i>Employee Dashboard</h2>
+        <p class="text-muted mb-0">Track your customer pipeline, activity, and latest work at a glance.</p>
+    </div>
+</div>
+
+<div class="row g-3 mb-4" id="employeeOverviewRow">
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold text-info" id="metricTotalCustomers">—</div>
+                <div class="text-muted"><i class="fa-solid fa-address-book me-1"></i>Total Customers</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold text-success" id="metricActiveCustomers">—</div>
+                <div class="text-muted" id="metricActiveLabel"><i class="fa-solid fa-chart-line me-1"></i>Your Active Customers</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold text-warning" id="metricDraftCustomers">—</div>
+                <div class="text-muted" id="metricDraftLabel"><i class="fa-solid fa-pen-to-square me-1"></i>Your Draft Customers</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="fs-2 fw-bold text-primary" id="metricMyCreatedCustomers">—</div>
+                <div class="text-muted"><i class="fa-solid fa-user-plus me-1"></i>Customers You Created</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header">
+                <i class="fa-solid fa-globe me-1"></i>Customers by Country
+            </div>
+            <div class="card-body">
+                <canvas id="countryChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span><i class="fa-solid fa-user-clock me-1"></i>Last Customer You Created</span>
+                <span class="badge bg-primary-subtle text-primary" id="latestCustomerHint">Recent</span>
+            </div>
+            <div class="card-body" id="lastCreatedCustomerCard">
+                <div class="text-muted">Loading...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/employee-dashboard.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/employee/dashboard.js" asp-append-version="true"></script>
+}
