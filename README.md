@@ -13,7 +13,9 @@
 
 ### A.2 SQL Server Management Studio (SSMS 22 recommended)
 1. Install **SQL Server Management Studio**.
-2. Open SSMS and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
+2. Open SSMS (Run as Administrator) and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
+3. If successfully connected we should be good (if not go get a coffee and phone your developer friend to come fix this)
+4. In the Root of the TechSolutions repo we cloned should be a file called 
 
 ### A.3 Visual Studio Community 2026 (Insiders)
 1. Install **Visual Studio Community 2026 Insiders**.
