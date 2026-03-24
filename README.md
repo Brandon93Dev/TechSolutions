@@ -10,6 +10,8 @@
 ### A.1 Visual Studio Community 2026 (Insiders)
 1. Install **Visual Studio Community 2026 Insiders**.
 2. During installation (or via Modify), add the **ASP.NET and web development** workload.
+3. After installation open up the root of the cloned project  and navigate into `~\TechSolutions_IPS_HW`
+4. 
 
 ### A.2 SQL Server Express (MSSQL 17 recommended)
 1. Download and run the SQL Server Express installer.
@@ -19,6 +21,7 @@
 ### A.3 SQL Server Management Studio (SSMS 22 recommended)
 1. Install **SQL Server Management Studio**.
 2. Open SSMS and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
+3. 
 
 ### A.4 SMTP Mail Server Credentials
 For **development**, you can use a local SMTP testing tool such as:
@@ -27,7 +30,6 @@ For **development**, you can use a local SMTP testing tool such as:
 - **MailDev**
 
 For **production**, use proper SMTP credentials (SendGrid, Microsoft 365, Gmail with App Password, etc.).
-
 ---
 
 **Tip:** Keep your `sa` password and SMTP settings handy — you'll need them when configuring `appsettings.json`.
