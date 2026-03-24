@@ -6,23 +6,43 @@
 
 ---
 ## A. Prerequisites (After Cloning the Repository)
+
 ### A.1 SQL Server Express (MSSQL 17 recommended)
-1. Download and run the SQL Server Express installer.
-2. When you reach the **Authentication Mode** step, choose **Mixed Mode** (SQL Server and Windows Authentication).
-3. Set and remember a strong `sa` password — you'll need it to connect later.
+
+1. Download and install **SQL Server Express**.
+2. During installation, select **Mixed Mode (SQL Server and Windows Authentication)**.
+3. Set a strong password for the `sa` account and remember it — you will need this later.
 
 ### A.2 SQL Server Management Studio (SSMS 22 recommended)
+
 1. Install **SQL Server Management Studio**.
-2. Open SSMS (Run as Administrator) and connect to your SQL Express instance (`.\SQLEXPRESS` or `(local)\SQLEXPRESS`).
-3. If successfully connected we should be good (if not go get a coffee and phone your developer friend to come fix this)
-4. In the Root of the TechSolutions repo we cloned should be a file called 
+2. Open **SSMS** (preferably as Administrator).
+3. Connect to your SQL Express instance using one of the following server names:
+   - `.\SQLEXPRESS`
+   - `(local)\SQLEXPRESS`
+4. In the root folder of the cloned repository, locate the file `techsln.bak`.
+5. Restore the database:
+   - Right-click on **Databases** → **Restore Database**
+   - Under **Source**, select **Device** → Add `techsln.bak`
+   - Click **OK** to restore.
 
 ### A.3 Visual Studio Community 2026 (Insiders)
+
 1. Install **Visual Studio Community 2026 Insiders**.
-2. During installation (or via Modify), add the **ASP.NET and web development** workload.
-3. After installation open up the root of the cloned project  and navigate into `~\TechSolutions_IPS_HW`
-4. Double-Click on TechSolutions_IPS_HW.sln and if prompted to select a program to open it, use visual studio.
-5. Press Ctrl+Shift+B or right click the solution and click Build (if the tech gremlins are asleep the project should build with no issues)
+2. During installation (or by modifying an existing installation), add the **ASP.NET and web development** workload.
+3. Navigate to the folder `TechSolutions_IPS_HW` inside the cloned repository.
+4. Double-click `TechSolutions_IPS_HW.sln` to open the solution in Visual Studio.
+5. Build the solution by pressing **Ctrl + Shift + B** (or right-click the solution → **Build Solution**).
+6. Locate and open **`appsettings.Development.json`**.
+7. Find the line that starts with `"DefaultConnection"`.
+8. **Update your credentials** as follows:
+   - Change `Password=YourStrongPasswordHere` to the **sa password** you created earlier.
+   - The final connection string should look similar to this:
+   ```json
+   "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=tecsln_main;Persist Security Info=True;User ID=sa;Password=TecAdmin132#;Trust Server Certificate=True"
+**How to update it:
+Replace YourStrongPasswordHere with the sa password you set during SQL Server Express installation.
+Do not change any other part of the string unless you used a different instance name.**
 
 ### A.4 SMTP Mail Server Credentials
 For **development**, you can use a local SMTP testing tool such as:
