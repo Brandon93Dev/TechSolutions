@@ -36,13 +36,16 @@
 6. Locate and open **`appsettings.Development.json`**.
 7. Find the line that starts with `"DefaultConnection"`.
 8. **Update your credentials** as follows:
-   - Change `Password=YourStrongPasswordHere` to the **sa password** you created earlier.
-   - The final connection string should look similar to this:
+   8.1   - Change `Password=YourStrongPasswordHere` to the **sa password** you created earlier.
+         - The final connection string should look similar to this:
    ```json
    "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=tecsln_main;Persist Security Info=True;User ID=sa;Password=YourStrongPasswordHere;Trust Server Certificate=True"
-   
+OR 
+   8.2 If you prefer to use windows authentication
+         - Replace `User ID=sa;Password=YourStrongPasswordHere;` with `Integrated Security=SSPI;`
+      
 **How to update it:
-Replace YourStrongPasswordHere with the sa password you set during SQL Server Express installation.
+Replace YourStrongPasswordHere with the sa password you set during SQL Server Express installation. (or use Method 8.2)
 Do not change any other part of the string unless you used a different instance name.**
 
 ### A.4 SMTP Mail Server Credentials
@@ -50,8 +53,19 @@ For **development**, you can use a local SMTP testing tool such as:
 - **Papercut**
 - **MailHog**
 - **MailDev**
+1. If you have a SMPT server available and ready to use replace the following fields with your settings
+    "Host": "",
+    "Port": "",
+    "User": "",
+    "Pass": "",
+    "EnableSsl": "false",
+    "FromEmail": "",
+2. SAVE THE FILE!
 
-For **production**, use proper SMTP credentials (SendGrid, Microsoft 365, Gmail with App Password, etc.).
+### B. Using the Application
+
+Press F
+
 ---
 
 **Tip:** Keep your `sa` password and SMTP settings handy — you'll need them when configuring `appsettings.json`.
