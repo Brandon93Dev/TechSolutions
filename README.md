@@ -5,6 +5,7 @@
 
 
 ---
+#So HOW to get solkution running... See below
 ## A. Prerequisites (After Cloning the Repository)
 
 ### A.1 SQL Server Express (MSSQL 17 recommended)
