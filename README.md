@@ -53,18 +53,19 @@ For **development**, you can use a local SMTP testing tool such as:
 - **Papercut**
 - **MailHog**
 - **MailDev**
-1. If you have a SMPT server available and ready to use replace the following fields with your settings
-    "Host": "",
-    "Port": "",
-    "User": "",
-    "Pass": "",
-    "EnableSsl": "false",
-    "FromEmail": "",
-2. SAVE THE FILE!
+1. If you have a SMPT server available and ready to use update the following fields with your settings
+   - "Host": ""
+   - "Port": ""    
+   - "User": ""
+   - "Pass": ""
+   - "FromEmail": ""
+3. SAVE THE FILE!
 
-### B. Using the Application
+## B. Using the Application
 
-Press F
+### B.1 Press F5 on your keyboard or click the start button Image 
+
+You should initially get a few prompts to accepot certificate, just accept and continue until a web browser opens
 
 ---
 
