@@ -61,11 +61,14 @@ For **development**, you can use a local SMTP testing tool such as:
    - "FromEmail": ""
 3. SAVE THE FILE!
 
-## B. Using the Application
-
-### B.1 Press F5 on your keyboard or click the start button Image 
-
+## B. Starting the Application
+Press F5 on your keyboard or click the start button (the one that says http with the green arrow to the left of it).
 You should initially get a few prompts to accepot certificate, just accept and continue until a web browser opens
+
+## C. Using the Application
+After starting the project up you should shortly see this page:
+<img width="818" height="772" alt="image" src="https://github.com/user-attachments/assets/7b3976fc-cbd4-4446-ba7b-a9dc63d2c810" />
+
 
 ---
 
