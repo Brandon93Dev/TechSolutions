@@ -42,7 +42,7 @@
          - The final connection string should look similar to this:
    ```json
    "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=tecsln_main;Persist Security Info=True;User ID=sa;Password=YourStrongPasswordHere;Trust Server Certificate=True"
-OR 
+OR       
    8.2 If you prefer to use windows authentication
          - Replace `User ID=sa;Password=YourStrongPasswordHere;` with `Integrated Security=SSPI;`
       
