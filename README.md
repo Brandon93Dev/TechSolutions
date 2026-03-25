@@ -74,13 +74,14 @@ After starting the project up you should shortly see this page:
 1. Click on the login button as shown above
    You will be redirected to the following page:   
 <img width="567" height="675" alt="image" src="https://github.com/user-attachments/assets/a0d0a0b6-66ff-485b-ae12-fced8dab03fa" />
+
    - Enter either of the following credential sets:
 
       ```json
          ADMIN                                                            Manager
          Email address : tsadmin@synsoft.co.za                            Email Address : tsmanagement@synsoft.co.za
          Password : F6aKhxM_u5[n?m3C                                      Password : #pl3sWk$X80l1YP-
-2. Click the <img width="388" height="83" alt="image" src="https://github.com/user-attachments/assets/07ba96b2-8b7f-4faf-895b-c9b228bb09d1" /> button
+3. Click the <img width="388" height="83" alt="image" src="https://github.com/user-attachments/assets/07ba96b2-8b7f-4faf-895b-c9b228bb09d1" /> button
    You will now be redirected to the Admin Dashboard
    <img width="1406" height="796" alt="image" src="https://github.com/user-attachments/assets/f609e9bb-3991-4271-bc70-8c86f08d985d" />
    dont worry toomuch if your numbers are different, you just havent registered any employees yet
