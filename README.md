@@ -78,8 +78,8 @@ After starting the project up you should shortly see this page:
    - Enter either of the following credential sets:
 
       ```json
-        ADMIN                                                            
-        Email address : tsadmin@synsoft.co.za                            
+        ADMIN
+        Email address : tsadmin@synsoft.co.za
         Password : F6aKhxM_u5[n?m3C
 
         Manager
