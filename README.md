@@ -12,6 +12,7 @@
 1. Download and install **SQL Server Express**.
 2. During installation, select **Mixed Mode (SQL Server and Windows Authentication)**.
 3. Set a strong password for the `sa` account and remember it — you will need this later.
+**Tip:** Keep your `sa` password and SMTP settings handy — you'll need them when configuring `appsettings.development.json`.
 
 ### A.2 SQL Server Management Studio (SSMS 22 recommended)
 
@@ -90,14 +91,12 @@ After starting the project up you should shortly see this page:
    
    You will now be redirected to the Admin Dashboard
    <img width="1406" height="796" alt="image" src="https://github.com/user-attachments/assets/f609e9bb-3991-4271-bc70-8c86f08d985d" />
-   dont worry toomuch if your numbers are different, you just havent registered any employees yet
+   dont worry toomuch if your numbers are different, you just havent registered any employees yet  
 
-4. 
-   
-
+From here on out i will leave you to explore, in my opinion its the best way to learn a system.
 ---
 
-**Tip:** Keep your `sa` password and SMTP settings handy — you'll need them when configuring `appsettings.json`.
+
 
 ## 1. Project Overview
 
