@@ -2,7 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/TechSolutions_IPS_HW/.github/copilot-instructions.md
 /TechSolutions_IPS_HW/.vs
 /TechSolutions_IPS_HW/bin/Debug/net10.0
 /TechSolutions_IPS_HW/obj
